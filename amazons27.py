@@ -1,4 +1,4 @@
-# CS1571 -- Assignment #3: El Juego de las Amazonas in Python 2.7
+# Basic El Juego de las Amazonas in Python 2.7
 # For more information about the game itself, please refer to:
 #      http://en.wikipedia.org/wiki/Game_of_the_Amazons
 #
