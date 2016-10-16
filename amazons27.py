@@ -1,4 +1,4 @@
-# Basic El Juego de las Amazonas in Python 2.7
+# CS1571 -- Assignment #3: El Juego de las Amazonas in Python 2.7
 # For more information about the game itself, please refer to:
 #      http://en.wikipedia.org/wiki/Game_of_the_Amazons
 #
@@ -116,17 +116,27 @@ class Amazons:
     def play(self):
         bPlay = True
         wscore = bscore = 0
+        white = False
         while (bPlay):
             for p in [self.playerW, self.playerB]:
                 # send player a copy of the current board
                 tmp_board = copy.deepcopy(self.board)
+                if(white == False):
+                    white = True
+                else:
+                    white = False
+                        
                 tstart = time.clock()
+                tmp_board.time_limit = tstart+self.time_limit
+                tmp_board.bWhite=white
                 move = eval("%s(tmp_board)"%p)
                 tstop = time.clock()
                 del tmp_board
 
-                print p,": move:", [rc2ld(x) for x in move],"time:", tstop-tstart, "seconds"
-                if not move:
+                if move:
+                    print p,": move:", [rc2ld(x) for x in move],"time:", tstop-tstart, "seconds"
+                else: 
+                    print p,"time:", tstop-tstart, "seconds"
                     # if move == False --> player resigned   
                     if self.board.bWhite:
                         (wscore, bscore) = (-1,0)
@@ -136,6 +146,7 @@ class Amazons:
 
                 # only keep clock for auto players
                 if p != "human" and (tstop - tstart) > self.time_limit:
+        
                     print p, ": took too long -- lost a turn"
                 elif not self.update(move):
                     print p, ": invalid move", move, " lost a turn"
@@ -173,6 +184,7 @@ class Amazons:
 #  * config: the board configuration represented as a list of lists.
 #    The assumed convention is (row, column) so config[0][1] = "b0"
 #  * bWhite: binary indicator -- True if it's white's turn to play
+#  * time_limit: deadline for when a move must be returned by
 # The Board class supports the following methods:
 #  * print_board: prints the current board configuration
 #  * valid_path: takes two location tuples (in row, column format) and returns 
@@ -188,6 +200,7 @@ class Amazons:
 #    whether we can end the game
 class Board:
     def __init__(self, size, wqs, bqs):
+        self.time_limit = None
         self.bWhite = True
         self.config = [['.' for c in range(size)] for r in range(size)]
         for (r,c) in wqs:
@@ -223,7 +236,7 @@ class Board:
             print("invalid move: not a straight line")
             return False
         if not h and not w:
-            print("invalid move: same star-end")
+            print("invalid move: same start-end")
             return False
 
         if not h:
@@ -387,16 +400,428 @@ def human(board):
             return (src,dst,adst)
 
 ###################### Your code between these two comment lines ####################################
+import numpy as np
+import Queue
+##############################################
+# The Board class stores basic information about the game configuration.
+# 
+# NOTE: The amount of info stored in this class is kept to a minimal. This
+# is on purpose. This is just set up as a way for the game controller to
+# pass information to your automatic player. Although you cannot change
+# the definition of the Board class, you are not constrained to use the
+# Board class as your main state reprsentation. You can define your own
+# State class and copy/transform from Board the info you need.
+
+# The Board class contains the following data:
+#  * config: the board configuration represented as a list of lists.
+#    The assumed convention is (row, column) so config[0][1] = "b0"
+#  * bWhite: binary indicator -- True if it's white's turn to play
+#  * time_limit: deadline for when a move must be returned by
+# The Board class supports the following methods:
+#  * print_board: prints the current board configuration
+#  * valid_path: takes two location tuples (in row, column format) and returns 
+#    whether the end points describe a valid path (for either the queen or the arrow)
+#  * move_queen: takes two location tuples (in row, column format)
+#    and updates the board configuration to reflect the queen moving
+#    from src to dst
+#  * shoot_arrow: takes one location tuple (in row, column format)
+#    and updates the board configuration to include the shot arrow
+#  * end_turn: This function does some end of turn accounting: update whose
+#    turn it is and determine whether the game ended
+#  * count_areas: This is a helper function for end_turn. It figures out
+#    whether we can end the game
+class MyBoardClass:
+    prime = 1
+    level = 3
+    exploresucc = 3
+    def __init__(self, board):
+        
+        self.bWhite = board.bWhite
+        self.isWhite=board.bWhite
+        if(self.bWhite == True):
+            self.isWhite = True
+        if(self.isWhite == True):
+            self.quene='Q'
+        else:
+            self.queue='q'
+        self.config = board.config
+        self.nextgoodmove = None
+        self.bymove=None
+        self.hsize = len(board.config[1])
+        self.vsize = len(board.config[0])
+        
+        self.currentmypos = []
+        self.currenttheirpos = []
+        self.populateVariables()
+                
+    def populateVariables(self):
+        whiteindex = np.where(np.array(self.config) == "Q")
+        blackindex = np.where(np.array(self.config) == "q")
+        self.whitequene = zip(whiteindex[0],whiteindex[1])
+        self.blackquene = zip(blackindex[0],blackindex[1])
+        
+        if(self.bWhite == True):
+            self.currentmypos = zip(whiteindex[0],whiteindex[1])
+            self.currenttheirpos = zip(blackindex[0],blackindex[1])
+        else:
+            self.currenttheirpos = zip(whiteindex[0],whiteindex[1])
+            self.currentmypos = zip(blackindex[0],blackindex[1])
+            
+    def print_board(self):
+        size = len(self.config)
+        print ("     Black")
+        tmp = "  "+" ".join(map(lambda x: chr(x+ord('a')),range(size)))
+        print (tmp)
+        for r in range(size-1, -1, -1):
+            print r, " ".join(self.config[r]), r
+        print (tmp)
+
+    def valid_path(self, src, dst):
+        (srcr, srcc) = src
+        (dstr, dstc) = dst        
+#         print src
+#         print dst
+        srcstr = rc2ld(src)
+        dststr = rc2ld(dst)
+#         print srcstr
+#         print dststr
+
+        symbol = self.config[srcr][srcc]
+#         print symbol
+#         print self.isWhite 
+        if ( symbol != 'Q' and  symbol != 'q'):
+            #print "invalid move: cannot find queen at src:",srcstr
+            return False
+
+        h = dstr-srcr
+        w = dstc-srcc
+        if h and w and abs(h/float(w)) != 1: 
+            #print("invalid move: not a straight line")
+            return False
+        if not h and not w:
+            #print("invalid move: same start-end")
+            return False
+
+        if not h:
+            op = (0, int(w/abs(w)))
+        elif not w:
+            op = (int(h/abs(h)),0)
+        else:
+            op = (int(h/abs(h)),int(w/abs(w)))
+
+        (r,c) = (srcr,srcc)
+        while (r,c) != (dstr, dstc):
+            (r,c) = (r+op[0], c+op[1])
+            if (self.config[r][c] != '.'):
+             #   print "invalid move: the path is not cleared between",srcstr,dststr
+                return False
+        return True
+
+    def move_queen(self, src, dst):
+        self.config[dst[0]][dst[1]] = self.config[src[0]][src[1]]
+        self.config[src[0]][src[1]] = '.'
+
+    def shoot_arrow(self, dst):
+        self.config[dst[0]][dst[1]] = 'x'
+
+    def end_turn(self):
+        # count up each side's territories
+        (w,b) = self.count_areas()
+
+        # if none of the queens of either side can move, the player who just
+        # played wins, sin
+        #ce that player claimed the last free space.
+        if b == w and b == 0:
+            if self.bWhite: w = 1
+            else: b = 1
+        # switch player
+        self.bWhite = not self.bWhite
+        return (w,b)
+
+    # adapted from standard floodfill method to count each player's territories
+    # - if a walled-off area with queens from one side belongs to that side
+    # - a walled-off area with queens from both side is neutral
+    # - a walled-off area w/ no queens is deadspace
+    def count_areas(self):
+        # replace all blanks with Q/q/n/-
+        def fill_area(replace):
+            count = 0
+            for r in range(size):
+                for c in range(size):
+                    if status[r][c] == '.':
+                        count+=1
+                        status[r][c] = replace
+            return count
+        
+        # find all blank cells connected to the seed blank at (seedr, seedc) 
+        def proc_area(seedr,seedc):
+            symbols = {} # keeps track of types of symbols encountered in this region
+            connected = [(seedr,seedc)] # a stack for df traversal on the grid
+            while connected:
+                (r, c) = connected.pop()
+                status[r][c] = '.'
+                for ops in [(-1,0),(1,0),(0,-1),(0,1),(-1,-1),(-1,1),(1,-1),(1,1)]:
+                    (nr, nc) = (r+ops[0], c+ops[1])
+                    if nr < 0 or nr >= size or nc < 0 or nc >= size:
+                        continue
+                    # if it's a new blank, need to process it; also add to seen
+                    if self.config[nr][nc] == '.' and status[nr][nc] == '?':
+                        status[nr][nc] = '.'
+                        connected.append((nr,nc))
+                    # if it's a queen or an arrow; just mark as seen
+                    elif self.config[nr][nc] != '.': 
+                        status[nr][nc] = 'x'
+                        symbols[self.config[nr][nc]] = 1
+
+            if 'Q' in symbols and not 'q' in symbols: # area belongs to white
+                return (fill_area('Q'), 0, 0)
+            elif 'q' in symbols and not 'Q' in symbols: #area belongs to black
+                return (0, fill_area('q'),0)
+            elif 'q' in symbols and 'Q' in symbols: # area is neutral
+                return (0, 0, fill_area('n'))
+            else: # deadspace -- still have to fill but don't return its area value
+                fill_area('-')
+                return (0,0,0)
+
+        size = len(self.config)
+        # data structure for keeping track of seen locations
+        status = [['?' for i in range(size)] for j in range(size)]
+        wtot = btot = ntot = 0
+        for r in range(size):
+            for c in range(size):            
+                # if it's an empty space and we haven't seen it before, process it
+                if self.config[r][c] == '.' and status[r][c] == '?':
+                    (w,b,n) = proc_area(r,c)
+                    wtot += w
+                    btot += b
+                    ntot += n
+                # if it's anything else, but we haven't seen it before, just mark it as seen and move on
+                elif status[r][c] == '?':
+                    status[r][c] = 'x'
+                    
+        if ntot == 0: # no neutral space left -- should end game
+            if wtot > btot:
+                return (wtot-btot, 0)
+            else: return (0, btot-wtot)
+        else: return (wtot+ntot, btot+ntot)
+    
+    def max_value(self, board,level):
+        node=None
+        #print level
+        #sleep(1)
+        state = copy.deepcopy(board)
+        if(board.isWhite == True):
+            state.queue='Q'
+        else:
+            state.queue='q'
+            
+        if(( state.isTerminal() == True) or (level == 0) ) :
+#             print state.Utility()
+            return (state,state.Utility())
+
+        children = state.getSuccessor(state.queue)
+#         if(len(children) == 1):            
+#             return (state,state.Utility())
+        
+        value = float("-inf")        
+        tmp_level = level-1
+        for child in children:
+            #child.print_board()
+            (newsucc,retval) = self.min_value(child,tmp_level)
+            if(value < retval):
+                node =child
+            value = max(value, retval)
+        return (node,value)
+    
+    def min_value(self, board,level):
+        node = None
+        #print level
+        #sleep(1)
+        state = copy.deepcopy(board)
+        
+        if(board.isWhite == True):
+            state.queue='q'
+        else:
+            state.queue='Q'
+
+        if(( state.isTerminal() == True) or (level == 0) ):
+            return (state,state.Utility())
+        children = state.getSuccessor(state.queue)        
+#         if(len(children) == 1):
+#             print "I got here .. wont believe"
+#             return (state,state.Utility())
+        
+        value = float("inf")
+        tmp_level = level-1
+        for child in children:
+            #child.print_board()
+            (newsucc,retval) = self.max_value(child,tmp_level)
+            if(value > retval):                
+                node = child
+            value = min(value, retval)
+        return (node,value)
+
+    def isTerminal(self):
+        wscore,bscore = self.end_turn()
+        if wscore and bscore:
+            return False
+        else:
+            return True
+    
+    def Utility(self):
+        (wscore,bscore) = self.count_areas()
+        if(self.isWhite == True):
+            return wscore - bscore
+        else:
+            return bscore - wscore
+        
+    
+    def getPrimeSuccesors(self,symbol):
+        
+        boardsp=Queue.PriorityQueue()
+        boards=[]        
+        currentboard=np.array(self.config)
+        if(symbol == 'Q'):
+            srcnodes = copy.deepcopy(self.whitequene)
+            startnodes = copy.deepcopy(self.blackquene)
+        else:
+            srcnodes = copy.deepcopy(self.blackquene)
+            startnodes = copy.deepcopy(self.whitequene)
+        
+        blankindext = np.where(np.array(currentboard) == ".")
+        blankindex = zip(blankindext[0],blankindext[1])
+        primeplaces = []
+        
+        loop = True
+        count = 0
+        
+        while(loop):
+            for (i,j) in startnodes:
+                
+                for (l,k) in startnodes:
+                    if (i,k) != (l,k):
+                        primeplaces.append((i,k))
+                        primeplaces.append((l,j))
+                
+                primeplaces.append((i-1,j-1))
+                primeplaces.append((i+1,j+1))
+                primeplaces.append((i-1,j+1))
+                primeplaces.append((i+1,j-1))
+                
+                primeplaces.append((i-1,j))    
+                primeplaces.append((i,j-1))
+                primeplaces.append((i,j+1))
+                primeplaces.append((i+1,j))
+                            
+
+            primeplacest = list(set(primeplaces).intersection(blankindex))
+            blankindex = primeplacest
+            arrowindex = primeplacest
+    
+            for dst in blankindex:
+                for src in srcnodes:
+                    tmp_board = copy.deepcopy(self)
+                    if tmp_board.valid_path(src,dst):
+                        tmp_board.move_queen(src,dst)
+                        for m,n in arrowindex:                
+                            adst=(m,n)
+                            if adst != dst and tmp_board.valid_path(dst, adst):
+                                tmp_arrow_board = copy.deepcopy(tmp_board)                             
+                                tmp_arrow_board.bymove =[src,dst,adst]
+                                tmp_arrow_board.shoot_arrow(adst)
+                                boardsp.put(copy.deepcopy(tmp_arrow_board),tmp_arrow_board.Utility() * -1)
+                                
+#                                 print tmp_arrow_board.Utility()
+                                del tmp_arrow_board
+                    del tmp_board
+#             print len(boards)
+            if(boardsp.qsize() > 0 or count != 0):
+                for i in range(min(MyBoardClass.exploresucc,boardsp.qsize())):
+#                     print " I came here"
+                    boards.append(boardsp.get())
+#                     print boardsp.get()
+#                     boards[0].print_board()
+                loop = False
+            else:
+                count = count +1
+                startnodes = copy.deepcopy(primeplaces)
+                
+        return boards 
+    
+    def getSuccessor(self,symbol):
+        boards = []
+        self.populateVariables()
+        if(MyBoardClass.prime == 1):
+            boards = self.getPrimeSuccesors(symbol)
+            if(len(boards) > 0):
+                return boards
+            
+        currentboard=np.array(self.config)
+        if(symbol == 'Q'):
+            srcnodes = copy.deepcopy(self.whitequene)
+        else:
+            srcnodes = copy.deepcopy(self.blackquene)
+             
+        blankindext = np.where(np.array(currentboard) == ".")
+        blankindex = zip(blankindext[0],blankindext[1])
+        
+        arrowindex =  srcnodes
+        if(len(blankindex) == 1):
+            arrowindex += blankindex
+        elif(len(blankindex) > 1):
+            arrowindex += zip(blankindex[0],blankindex[1]) 
+
+#         start=time.time()
+        for dst in blankindex:
+            for src in srcnodes:
+                tmp_board = copy.deepcopy(self)
+                if tmp_board.valid_path(src,dst):
+                    tmp_board.move_queen(src,dst)
+                    for m,n in arrowindex:                
+                        adst=(m,n)
+                        if adst != dst and tmp_board.valid_path(dst, adst):
+                            tmp_arrow_board = copy.deepcopy(tmp_board)                             
+                            tmp_arrow_board.bymove =[src,dst,adst]
+                            tmp_arrow_board.shoot_arrow(adst)
+                            boards.append(copy.deepcopy(tmp_arrow_board))
+                            del tmp_arrow_board
+                del tmp_board
+    #         print("--- %s seconds ---" % (time.time() - start))
+        return boards 
+
+                                  
+    def minmax_decision(self):
+        start = time.time()
+        level = MyBoardClass.level
+        (node,value) = self.max_value(self,level)
+#         print node.bymove        
+        return (node,value)
+    
+def kmt81(board):    
+    myBoard = MyBoardClass(board)
+#     myBoard.print_board()        
+    (node,value) = myBoard.minmax_decision()
+    return node.bymove
+    
+
+
+def kmt82(board):    
+    myBoard = MyBoardClass(board)
+#     myBoard.print_board()
+    (node,value) = myBoard.minmax_decision()
+    return node.bymove
 
 ###################### Your code between these two comment lines ####################################
-        
+
 def main():
+
     if len(sys.argv) == 2:
         fname = sys.argv[1]
     else:
-        fname = raw_input("setup file name?")
+        fname = "amazons1.config" #raw_input("setup file name?")
     game = Amazons(fname)
     game.play()
+    
 
 if __name__ == "__main__":
     main()
