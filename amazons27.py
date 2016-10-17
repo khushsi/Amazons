@@ -59,6 +59,7 @@
 ############################################
 
 import copy, random, re, time, sys
+from pkg_resources._vendor.pyparsing import empty
 
 # The Amazons class controls the flow of the game.
 # Its data include:
@@ -402,6 +403,7 @@ def human(board):
 ###################### Your code between these two comment lines ####################################
 import numpy as np
 import Queue
+import random
 ##############################################
 # The Board class stores basic information about the game configuration.
 # 
@@ -432,8 +434,9 @@ import Queue
 #    whether we can end the game
 class MyBoardClass:
     prime = 1
-    level = 3
+    level = 2
     exploresucc = 3
+    
     def __init__(self, board):
         
         self.bWhite = board.bWhite
@@ -529,8 +532,7 @@ class MyBoardClass:
         (w,b) = self.count_areas()
 
         # if none of the queens of either side can move, the player who just
-        # played wins, sin
-        #ce that player claimed the last free space.
+        # played wins, since that player claimed the last free space.
         if b == w and b == 0:
             if self.bWhite: w = 1
             else: b = 1
@@ -698,21 +700,21 @@ class MyBoardClass:
         while(loop):
             for (i,j) in startnodes:
                 
-                for (l,k) in startnodes:
-                    if (i,k) != (l,k):
-                        primeplaces.append((i,k))
-                        primeplaces.append((l,j))
                 
                 primeplaces.append((i-1,j-1))
                 primeplaces.append((i+1,j+1))
                 primeplaces.append((i-1,j+1))
                 primeplaces.append((i+1,j-1))
                 
+                for (l,k) in startnodes:
+                    if (i,k) != (l,k):
+                        primeplaces.append((i,k))
+                        primeplaces.append((l,j))
+
                 primeplaces.append((i-1,j))    
                 primeplaces.append((i,j-1))
                 primeplaces.append((i,j+1))
                 primeplaces.append((i+1,j))
-                            
 
             primeplacest = list(set(primeplaces).intersection(blankindex))
             blankindex = primeplacest
@@ -784,11 +786,52 @@ class MyBoardClass:
                             tmp_arrow_board.bymove =[src,dst,adst]
                             tmp_arrow_board.shoot_arrow(adst)
                             boards.append(copy.deepcopy(tmp_arrow_board))
+                            
                             del tmp_arrow_board
                 del tmp_board
     #         print("--- %s seconds ---" % (time.time() - start))
         return boards 
 
+    def getRandomSuccessor(self,symbol):
+        boards = []
+        randomnode=None
+        self.populateVariables()
+            
+        currentboard=np.array(self.config)
+        if(symbol == 'Q'):
+            srcnodes = copy.deepcopy(self.whitequene)
+        else:
+            srcnodes = copy.deepcopy(self.blackquene)
+             
+        blankindext = np.where(np.array(currentboard) == ".")
+        blankindex = zip(blankindext[0],blankindext[1])
+        
+        arrowindex =  srcnodes
+        if(len(blankindex) == 1):
+            arrowindex += blankindex
+        elif(len(blankindex) > 1):
+            arrowindex += zip(blankindex[0],blankindex[1]) 
+
+#         start=time.time()
+        for dst in blankindex:
+            for src in srcnodes:
+                tmp_board = copy.deepcopy(self)
+                if tmp_board.valid_path(src,dst):
+                    tmp_board.move_queen(src,dst)
+                    for m,n in arrowindex:                
+                        adst=(m,n)
+                        if adst != dst and tmp_board.valid_path(dst, adst):
+                            tmp_arrow_board = copy.deepcopy(tmp_board)                             
+                            tmp_arrow_board.bymove =[src,dst,adst]
+                            tmp_arrow_board.shoot_arrow(adst)
+                            boards.append(copy.deepcopy(tmp_arrow_board))
+                            del tmp_arrow_board
+                del tmp_board
+    #     print("--- %s seconds ---" % (time.time() - start))
+        rnum = random.randint(0,len(boards)-1)
+        if(len(boards) > 0):
+            randomnode = boards[rnum] 
+        return  randomnode
                                   
     def minmax_decision(self):
         start = time.time()
@@ -810,6 +853,16 @@ def kmt82(board):
 #     myBoard.print_board()
     (node,value) = myBoard.minmax_decision()
     return node.bymove
+    
+#     if(myBoard.isWhite == True):
+#         symbol='Q'
+#     else:
+#         symbol='q'
+# 
+#     node = myBoard.getRandomSuccessor(symbol)
+#     if(node is not None ):
+#         return node.bymove
+#     return [(0,0),(0,0),(0,0)]
 
 ###################### Your code between these two comment lines ####################################
 
@@ -818,7 +871,7 @@ def main():
     if len(sys.argv) == 2:
         fname = sys.argv[1]
     else:
-        fname = "amazons1.config" #raw_input("setup file name?")
+        fname = "amazons1.config" #raw_input("setup file name?")        
     game = Amazons(fname)
     game.play()
     
