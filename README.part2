@@ -1,0 +1,31 @@
+# Project Name
+
+Assignment 2 : Part 2 : Foundation of AI -Game of Amazons
+
+## Requirements
+
+Python 2.7
+
+## Usage / Running the program - 
+
+Main file is amazons27.py
+
+Command : Python amazons27.py
+
+Input:: the program will take the input for configuration file
+
+example:  
+
+```
+[khushboo@terminal]$ python amazons27.py
+<span style="color:orange;">Enter the set file?</span>amazons.config
+
+```
+
+
+## Weblinks and Resources reffered
+Class Notes
+lecture Notes
+`https://en.wikipedia.org/wiki/Game_of_the_Amazons`
+`Jens Lieberum, An evaluation function for the game of amazons, Theoretical Computer Science, Volume 349, Issue 2, 2005, Pages 230-244, ISSN 0304-3975, http://dx.doi.org/10.1016/j.tcs.2005.09.048.`
+

@@ -1,0 +1,806 @@
+Script started on Tue 18 Oct 2016 10:45:52 AM EDT
+]0;khushboo@severus-temp:~/aiss2[khushboo@severus-temp aiss2]$ python amazons27.py 
+setup file name?amazons.config
+kmt81 : move: ['j3', 'j5', 'b5'] time: 13.96 seconds
+     Black
+  a b c d e f g h i j
+9 . . . q . . q . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 q . . . . . . . . q 6
+5 . x . . . . . . . Q 5
+4 . . . . . . . . . . 4
+3 Q . . . . . . . . . 3
+2 . . . . . . . . . . 2
+1 . . . . . . . . . . 1
+0 . . . Q . . Q . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: d8  d9-d1
+     Black
+  a b c d e f g h i j
+9 . . . . . . q . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 q . . . . . . . . q 6
+5 . x . . . . . . . Q 5
+4 . . . . . . . . . . 4
+3 Q . . . . . . . . . 3
+2 . . . . . . . . . . 2
+1 . . . q . . . . . . 1
+0 . . . Q . . Q . . . 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: e0
+human : move: ['d9', 'd1', 'e0'] time: 0.0 seconds
+kmt81 : move: ['g0', 'g6', 'g1'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . q . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 q . . . . . Q . . q 6
+5 . x . . . . . . . Q 5
+4 . . . . . . . . . . 4
+3 Q . . . . . . . . . 3
+2 . . . . . . . . . . 2
+1 . . . q . . x . . . 1
+0 . . . Q x . . . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: q1-   j6-e1
+     Black
+  a b c d e f g h i j
+9 . . . . . . q . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 q . . . . . Q . . . 6
+5 . x . . . . . . . Q 5
+4 . . . . . . . . . . 4
+3 Q . . . . . . . . . 3
+2 . . . . . . . . . . 2
+1 . . . q q . x . . . 1
+0 . . . Q x . . . . . 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: b4
+human : move: ['j6', 'e1', 'b4'] time: 0.0 seconds
+kmt81 : move: ['a3', 'c1', 'd2'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . q . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 q . . . . . Q . . . 6
+5 . x . . . . . . . Q 5
+4 . x . . . . . . . . 4
+3 . . . . . . . . . . 3
+2 . . . x . . . . . . 2
+1 . . Q q q . x . . . 1
+0 . . . Q x . . . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: g9-j6
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 q . . . . . Q . . q 6
+5 . x . . . . . . . Q 5
+4 . x . . . . . . . . 4
+3 . . . . . . . . . . 3
+2 . . . x . . . . . . 2
+1 . . Q q q . x . . . 1
+0 . . . Q x . . . . . 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: i6
+human : move: ['g9', 'j6', 'i6'] time: 0.0 seconds
+kmt81 : move: ['g6', 'e6', 'd6'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 q . . x Q . . . x q 6
+5 . x . . . . . . . Q 5
+4 . x . . . . . . . . 4
+3 . . . . . . . . . . 3
+2 . . . x . . . . . . 2
+1 . . Q q q . x . . . 1
+0 . . . Q x . . . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: a1  a6-a1
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x Q . . . x q 6
+5 . x . . . . . . . Q 5
+4 . x . . . . . . . . 4
+3 . . . . . . . . . . 3
+2 . . . x . . . . . . 2
+1 q . Q q q . x . . . 1
+0 . . . Q x . . . . . 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: b1 2 1
+human : move: ['a6', 'a1', 'b1'] time: 0.0 seconds
+kmt81 : move: ['d0', 'b0', 'c0'] time: 14.01 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x Q . . . x q 6
+5 . x . . . . . . . Q 5
+4 . x . . . . . . . . 4
+3 . . . . . . . . . . 3
+2 . . . x . . . . . . 2
+1 q x Q q q . x . . . 1
+0 . Q x . x . . . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: j6-i5
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x Q . . . x . 6
+5 . x . . . . . . q Q 5
+4 . x . . . . . . . . 4
+3 . . . . . . . . . . 3
+2 . . . x . . . . . . 2
+1 q x Q q q . x . . . 1
+0 . Q x . x . . . . . 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: j6
+human : move: ['j6', 'i5', 'j6'] time: 0.0 seconds
+kmt81 : move: ['e6', 'a2', 'c2'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . q Q 5
+4 . x . . . . . . . . 4
+3 . . . . . . . . . . 3
+2 Q . x x . . . . . . 2
+1 q x Q q q . x . . . 1
+0 . Q x . x . . . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: i5-j4
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . . Q 5
+4 . x . . . . . . . q 4
+3 . . . . . . . . . . 3
+2 Q . x x . . . . . . 2
+1 q x Q q q . x . . . 1
+0 . Q x . x . . . . . 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: i5
+human : move: ['i5', 'j4', 'i5'] time: 0.0 seconds
+kmt81 : move: ['j5', 'i4', 'f1'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x . . . . . . Q q 4
+3 . . . . . . . . . . 3
+2 Q . x x . . . . . . 2
+1 q x Q q q x x . . . 1
+0 . Q x . x . . . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: j4-j3
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x . . . . . . Q . 4
+3 . . . . . . . . . q 3
+2 Q . x x . . . . . . 2
+1 q x Q q q x x . . . 1
+0 . Q x . x . . . . . 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: a3
+human : move: ['j4', 'j3', 'a3'] time: 0.0 seconds
+kmt81 : move: ['i4', 'i2', 'i3'] time: 14.01 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x . . . . . . . . 4
+3 x . . . . . . . x q 3
+2 Q . x x . . . . Q . 2
+1 q x Q q q x x . . . 1
+0 . Q x . x . . . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: d1-f2
+invalid move: not a straight line
+Input please: d1-e2
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x . . . . . . . . 4
+3 x . . . . . . . x q 3
+2 Q . x x q . . . Q . 2
+1 q x Q . q x x . . . 1
+0 . Q x . x . . . . . 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: h2
+human : move: ['d1', 'e2', 'h2'] time: 0.0 seconds
+kmt81 : move: ['c1', 'd0', 'd1'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x . . . . . . . . 4
+3 x . . . . . . . x q 3
+2 Q . x x q . . x Q . 2
+1 q x . x q x x . . . 1
+0 . Q x Q x . . . . . 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: j3-j0
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x . . . . . . . . 4
+3 x . . . . . . . x . 3
+2 Q . x x q . . x Q . 2
+1 q x . x q x x . . . 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: j j3
+human : move: ['j3', 'j0', 'j3'] time: 0.0 seconds
+kmt81 : move: ['i2', 'j1', 'i1'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x . . . . . . . . 4
+3 x . . . . . . . x x 3
+2 Q . x x q . . x . . 2
+1 q x . x q x x . x Q 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: e2-c4
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x q . . . . . . . 4
+3 x . . . . . . . x x 3
+2 Q . x x . . . x . . 2
+1 q x . x q x x . x Q 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: b3
+human : move: ['e2', 'c4', 'b3'] time: 0.0 seconds
+kmt81 : move: ['a2', 'b2', 'd4'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x q x . . . . . . 4
+3 x x . . . . . . x x 3
+2 . Q x x . . . x . . 2
+1 q x . x q x x . x Q 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: e1-e2 3
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . . . . . . x . 5
+4 . x q x . . . . . . 4
+3 x x . . q . . . x x 3
+2 . Q x x . . . x . . 2
+1 q x . x . x x . x Q 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: c b3  c3
+human : move: ['e1', 'e3', 'c3'] time: 0.0 seconds
+kmt81 : move: ['j1', 'i0', 'd5'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x . . . . . . 4
+3 x x x . q . . . x x 3
+2 . Q x x . . . x . . 2
+1 q x . x . x x . x . 1
+0 . Q x Q x . . . Q q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: e3-32  e2
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x . . . . . . 4
+3 x x x . . . . . x x 3
+2 . Q x x q . . x . . 2
+1 q x . x . x x . x . 1
+0 . Q x Q x . . . Q q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: e1
+human : move: ['e3', 'e2', 'e1'] time: 0.0 seconds
+kmt81 : move: ['i0', 'f3', 'e4'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x x . . . . . 4
+3 x x x . . Q . . x x 3
+2 . Q x x q . . x . . 2
+1 q x . x x x x . x . 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: e2-g2
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x x . . . . . 4
+3 x x x . . Q . . x x 3
+2 . Q x x . . q x . . 2
+1 q x . x x x x . x . 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: g4
+human : move: ['e2', 'g2', 'g4'] time: 0.0 seconds
+kmt81 : move: ['f3', 'g3', 'd3'] time: 14.01 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x x . x . . . 4
+3 x x x x . . Q . x x 3
+2 . Q x x . . q x . . 2
+1 q x . x x x x . x . 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: f3^[[D^[[D          g2-f3
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x x . x . . . 4
+3 x x x x . q Q . x x 3
+2 . Q x x . . . x . . 2
+1 q x . x x x x . x . 1
+0 . Q x Q x . . . . q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: f4
+human : move: ['g2', 'f3', 'f4'] time: 0.0 seconds
+kmt81 : move: ['g3', 'g2', 'i0'] time: 13.99 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x x x x . . . 4
+3 x x x x . q . . x x 3
+2 . Q x x . . Q x . . 2
+1 q x . x x x x . x . 1
+0 . Q x Q x . . . x q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: f3-h3
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x x x x . . . 4
+3 x x x x . . . q x x 3
+2 . Q x x . . Q x . . 2
+1 q x . x x x x . x . 1
+0 . Q x Q x . . . x q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: h4
+human : move: ['f3', 'h3', 'h4'] time: 0.0 seconds
+h3kmt81 : move: ['g2', 'h1', 'i2'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x x x x x . . 4
+3 x x x x . . . q x x 3
+2 . Q x x . . . x x . 2
+1 q x . x x x x Q x . 1
+0 . Q x Q x . . . x q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: -  h3-h i5
+['hh3-i5'] is not a valid input format
+Input please: h3-i4
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . . x . 5
+4 . x q x x x x x q . 4
+3 x x x x . . . . x x 3
+2 . Q x x . . . x x . 2
+1 q x . x x x x Q x . 1
+0 . Q x Q x . . . x q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: h5
+human : move: ['h3', 'i4', 'h5'] time: 0.0 seconds
+kmt81 : move: ['d0', 'c1', 'd0'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . x x . 5
+4 . x q x x x x x q . 4
+3 x x x x . . . . x x 3
+2 . Q x x . . . x x . 2
+1 q x Q x x x x Q x . 1
+0 . Q x x x . . . x q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: a1-g2  a1 2
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . x x . 5
+4 . x q x x x x x q . 4
+3 x x x x . . . . x x 3
+2 q Q x x . . . x x . 2
+1 . x Q x x x x Q x . 1
+0 . Q x x x . . . x q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: a0
+human : move: ['a1', 'a2', 'a0'] time: 0.0 seconds
+kmt81 : move: ['h1', 'g2', 'h1'] time: 14.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . x x . 5
+4 . x q x x x x x q . 4
+3 x x x x . . . . x x 3
+2 q Q x x . . Q x x . 2
+1 . x Q x x x x x x . 1
+0 x Q x x x . . . x q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: a2-a1
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . x x . 5
+4 . x q x x x x x q . 4
+3 x x x x . . . . x x 3
+2 . Q x x . . Q x x . 2
+1 q x Q x x x x x x . 1
+0 x Q x x x . . . x q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: a2
+human : move: ['a2', 'a1', 'a2'] time: 0.0 seconds
+kmt81 : move: ['g2', 'f3', 'g2'] time: 14.01 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . x x . 5
+4 . x q x x x x x q . 4
+3 x x x x . Q . . x x 3
+2 x Q x x . . x x x . 2
+1 q x Q x x x x x x . 1
+0 x Q x x x . . . x q 0
+  a b c d e f g h i j
+     White
+
+You're playing Black (q)
+Options:
+* To move, type "<loc-from> <loc-to>" (e.g., "a3-d3")
+* To resign, type "<return>"
+Input please: i4-h2 3
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . x x . 5
+4 . x q x x x x x . . 4
+3 x x x x . Q . q x x 3
+2 x Q x x . . x x x . 2
+1 q x Q x x x x x x . 1
+0 x Q x x x . . . x q 0
+  a b c d e f g h i j
+     White
+
+Options:
+* To shoot, type "<loc-to>" (e.g., "h3")
+* To resign, type "<return>"
+Input please: g3
+human : move: ['i4', 'h3', 'g3'] time: 0.0 seconds
+     Black
+  a b c d e f g h i j
+9 . . . . . . . . . . 9
+8 . . . . . . . . . . 8
+7 . . . . . . . . . . 7
+6 . . . x . . . . x x 6
+5 . x . x . . . x x . 5
+4 . x q x x x x x . . 4
+3 x x x x . Q x q x x 3
+2 x Q x x . . x x x . 2
+1 q x Q x x x x x x . 1
+0 x Q x x x . . . x q 0
+  a b c d e f g h i j
+     White
+
+human (black) wins by a margin of 45
+]0;khushboo@severus-temp:~/aiss2[khushboo@severus-temp aiss2]$ exit
+exit
+
+Script done on Tue 18 Oct 2016 11:06:01 AM EDT

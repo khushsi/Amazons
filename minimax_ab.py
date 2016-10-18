@@ -128,7 +128,7 @@ class Play(object):
     
 if __name__ == '__main__':
     
-    inputfile = sys.argv[1]
+    inputfile = raw_input("Please Enter the test case file name?")
     #inputfile = "test_tree1"
     nodelistraw = []
 
@@ -137,7 +137,8 @@ if __name__ == '__main__':
  
     iTreeObject = TreeObject(nodelistraw)
     game = Play(iTreeObject)
-
-    print game.minmax_decision()
-    print game.minmax_ab_decision()
+    print "Minimax Output"
+    print "Utility value :" + str(game.minmax_decision())
+    print "Minimax Output with Alpha-Beta Pruning"
+    print "Utility value :" + str(game.minmax_ab_decision())
     

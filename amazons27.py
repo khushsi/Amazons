@@ -59,7 +59,7 @@
 ############################################
 
 import copy, random, re, time, sys
-from pkg_resources._vendor.pyparsing import empty
+from warnings import catch_warnings
 
 # The Amazons class controls the flow of the game.
 # Its data include:
@@ -404,6 +404,8 @@ def human(board):
 import numpy as np
 import Queue
 import random
+import signal
+from Queue import PriorityQueue
 ##############################################
 # The Board class stores basic information about the game configuration.
 # 
@@ -432,10 +434,13 @@ import random
 #    turn it is and determine whether the game ended
 #  * count_areas: This is a helper function for end_turn. It figures out
 #    whether we can end the game
-class MyBoardClass:
+def kmt81handler(signum, frame):    
+    raise Exception("EOP")
+
+class kmt81MyBoardClass:
     prime = 1
-    level = 2
-    exploresucc = 3
+    level = 100
+    exploresucc = 20
     
     def __init__(self, board):
         
@@ -606,11 +611,38 @@ class MyBoardClass:
                 return (wtot-btot, 0)
             else: return (0, btot-wtot)
         else: return (wtot+ntot, btot+ntot)
-    
+        
+        
+#     def max_valueab(self, board,level,alpha,beta):
+#         node=None
+#         state = copy.deepcopy(board)
+#         if(board.isWhite == True):
+#             state.queue='Q'
+#         else:
+#             state.queue='q'
+#             
+#         if(( state.isTerminal() == True) or (level == 0) ) :
+#             return (state,state.Utility())
+#         
+#         children = state.getSuccessor(state.queue)
+#         
+#         value = float("-inf")        
+#         tmp_level = level-1
+#         for child in children:
+#             #child.print_board()
+#             (newsucc,retval) = self.min_valueab(child,tmp_level,alpha,beta)
+#             value = max(value, retval)
+#             if value >= beta:
+#                 return (node,value)
+# 
+#             if(value < retval):
+#                 node =child
+#             
+#             alpha=max(alpha,value)
+#         return (node,value)
+        
     def max_value(self, board,level):
         node=None
-        #print level
-        #sleep(1)
         state = copy.deepcopy(board)
         if(board.isWhite == True):
             state.queue='Q'
@@ -618,12 +650,9 @@ class MyBoardClass:
             state.queue='q'
             
         if(( state.isTerminal() == True) or (level == 0) ) :
-#             print state.Utility()
             return (state,state.Utility())
 
         children = state.getSuccessor(state.queue)
-#         if(len(children) == 1):            
-#             return (state,state.Utility())
         
         value = float("-inf")        
         tmp_level = level-1
@@ -635,12 +664,37 @@ class MyBoardClass:
             value = max(value, retval)
         return (node,value)
     
+#     def min_valueab(self, board,level,alpha,beta):
+#         node=None
+# 
+#         state = copy.deepcopy(board)
+#         if(board.isWhite == True):
+#             state.queue='Q'
+#         else:
+#             state.queue='q'
+#             
+#         if(( state.isTerminal() == True) or (level == 0) ) :
+#             return (state,state.Utility())
+# 
+#         children = state.getSuccessor(state.queue)        
+#         
+#         value = float("inf")
+#         tmp_level = level-1
+#         for child in children:
+#             (newsucc,retval) = self.max_valueab(child,tmp_level,alpha,beta)
+#             value = min(value, retval)
+#             if value <= alpha:
+#                 return (node,value)
+#             if(value > retval):                
+#                 node = child
+#             
+#             beta=min(beta,value)
+#         return (node,value)
+
+    
     def min_value(self, board,level):
         node = None
-        #print level
-        #sleep(1)
         state = copy.deepcopy(board)
-        
         if(board.isWhite == True):
             state.queue='q'
         else:
@@ -648,15 +702,12 @@ class MyBoardClass:
 
         if(( state.isTerminal() == True) or (level == 0) ):
             return (state,state.Utility())
+
         children = state.getSuccessor(state.queue)        
-#         if(len(children) == 1):
-#             print "I got here .. wont believe"
-#             return (state,state.Utility())
         
         value = float("inf")
         tmp_level = level-1
         for child in children:
-            #child.print_board()
             (newsucc,retval) = self.max_value(child,tmp_level)
             if(value > retval):                
                 node = child
@@ -680,7 +731,7 @@ class MyBoardClass:
     
     def getPrimeSuccesors(self,symbol):
         
-        boardsp=Queue.PriorityQueue()
+        
         boards=[]        
         currentboard=np.array(self.config)
         if(symbol == 'Q'):
@@ -700,17 +751,16 @@ class MyBoardClass:
         while(loop):
             for (i,j) in startnodes:
                 
+                for (l,k) in startnodes:
+                    if (i,k) != (l,k):
+                        primeplaces.append((i,k))
+                        primeplaces.append((l,j))
                 
                 primeplaces.append((i-1,j-1))
                 primeplaces.append((i+1,j+1))
                 primeplaces.append((i-1,j+1))
                 primeplaces.append((i+1,j-1))
                 
-                for (l,k) in startnodes:
-                    if (i,k) != (l,k):
-                        primeplaces.append((i,k))
-                        primeplaces.append((l,j))
-
                 primeplaces.append((i-1,j))    
                 primeplaces.append((i,j-1))
                 primeplaces.append((i,j+1))
@@ -731,18 +781,13 @@ class MyBoardClass:
                                 tmp_arrow_board = copy.deepcopy(tmp_board)                             
                                 tmp_arrow_board.bymove =[src,dst,adst]
                                 tmp_arrow_board.shoot_arrow(adst)
-                                boardsp.put(copy.deepcopy(tmp_arrow_board),tmp_arrow_board.Utility() * -1)
+                                boards.append(copy.deepcopy(tmp_arrow_board))
                                 
 #                                 print tmp_arrow_board.Utility()
                                 del tmp_arrow_board
                     del tmp_board
 #             print len(boards)
-            if(boardsp.qsize() > 0 or count != 0):
-                for i in range(min(MyBoardClass.exploresucc,boardsp.qsize())):
-#                     print " I came here"
-                    boards.append(boardsp.get())
-#                     print boardsp.get()
-#                     boards[0].print_board()
+            if(len(boards) > 20 or count != 0):
                 loop = False
             else:
                 count = count +1
@@ -753,8 +798,32 @@ class MyBoardClass:
     def getSuccessor(self,symbol):
         boards = []
         self.populateVariables()
-        if(MyBoardClass.prime == 1):
+        
+        if(symbol=='Q'):
+            opp_symbol='q'
+        else:
+            opp_symbol='Q'
+        
+        if(kmt81MyBoardClass.prime == 1):
             boards = self.getPrimeSuccesors(symbol)
+            
+            pq = PriorityQueue()
+           # oppways = self.oppqueenWays(symbol)
+            for b in boards:
+                ways = b.countWays(opp_symbol) #+oppways[b[0]]
+                pq.put(b,ways)
+                
+            boards = []
+            max_childs = kmt81MyBoardClass.exploresucc
+            
+            #print pq
+            size = pq.qsize()
+            
+            for i in range(size):
+                if max_childs > 0:
+                    boards.append(pq.get())
+                    max_childs = max_childs-1
+            
             if(len(boards) > 0):
                 return boards
             
@@ -785,12 +854,103 @@ class MyBoardClass:
                             tmp_arrow_board = copy.deepcopy(tmp_board)                             
                             tmp_arrow_board.bymove =[src,dst,adst]
                             tmp_arrow_board.shoot_arrow(adst)
-                            boards.append(copy.deepcopy(tmp_arrow_board))
-                            
+                            boards.append(copy.deepcopy(tmp_arrow_board))                            
                             del tmp_arrow_board
                 del tmp_board
     #         print("--- %s seconds ---" % (time.time() - start))
-        return boards 
+        return boards
+    
+    def countWays(self,symbol):
+        ways=0
+        mways=0
+        oppways = dict()
+        #print symbol
+        oursymbol = 'q'
+        opp_queens = np.where(np.array(self.config) == symbol)
+        qPos = zip(opp_queens[0],opp_queens[1])
+        
+        if(symbol == 'q'):
+            oursymbol = 'Q'
+            
+        our_queens = np.where(np.array(self.config) == oursymbol)
+        QPos = zip(our_queens[0],our_queens[1])
+
+        #print qPos
+        
+        for q in qPos :
+            #print ways
+            ways = ways + self.countDots(q)
+        
+        for q in QPos :
+            #print ways
+            mways = mways + self.countDots(q)
+        
+        
+        return mways - ways 
+
+    def oppqueenWays(self,symbol):
+        oppways = dict()
+        #print symbol
+        
+        opp_queens = np.where(np.array(self.config) == symbol)
+        qPos = zip(opp_queens[0],opp_queens[1])
+        our_queens = np.where(np.array(self.config) == symbol)
+        QPos = zip(our_queens[0],our_queens[1])
+
+        #print qPos
+        
+        for q in qPos :
+            oppways[q] = self.countDots(q)        
+        
+        return oppways
+    
+    def countDots(self,pos):
+        dots=0
+        ulimit = self.hsize -1
+        llimit = 0
+        boardArr = np.array(self.config)
+        # upper left
+        if pos[0]<ulimit and pos[1]>llimit:
+            if boardArr[pos[0]+1][pos[1]-1]=='.' :
+                dots=dots+1
+        
+        # up
+        if pos[0]<ulimit:
+            if boardArr[pos[0]+1][pos[1]]=='.':
+                dots=dots+1
+                
+        # upper right
+        if pos[0]<ulimit and pos[1]<ulimit:
+            if boardArr[pos[0]+1][pos[1]+1]=='.':
+                dots=dots+1
+                
+        # left
+        if pos[1]>llimit:
+            if boardArr[pos[0]][pos[1]-1]=='.':
+                dots=dots+1
+                
+        # right
+        if pos[1]<ulimit:
+            if boardArr[pos[0]][pos[1]+1]=='.':
+                dots=dots+1
+                
+        # lower left
+        if pos[0]>llimit and pos[1]>llimit:
+            if boardArr[pos[0]-1][pos[1]-1]=='.':
+                dots=dots+1
+                
+        # down
+        if pos[0]>llimit:
+            if boardArr[pos[0]-1][pos[1]]=='.':
+                dots=dots+1
+                
+        # lower right
+        if pos[0]> llimit and pos[1]<ulimit:
+            if boardArr[pos[0]-1][pos[1]+1]=='.':
+                dots=dots+1
+
+        return dots                      
+    
 
     def getRandomSuccessor(self,symbol):
         boards = []
@@ -832,27 +992,78 @@ class MyBoardClass:
         if(len(boards) > 0):
             randomnode = boards[rnum] 
         return  randomnode
+
+    
+#     def minmax_ab_decision(self): 
+#         ct =0
+#         signal.signal(signal.SIGALRM, kmt81handler)
+#         signal.alarm( 14 )    
+#         
+#         node = [(0,0),(0,0),(0,0)]
+#         value = 0    
+#         try:    
+#             start = time.time()
+#             level = kmt81MyBoardClass.level
+#             
+#             for i in range(level):
+#                 print i
+#                 (node,value) = self.max_valueab(self,i+1,float("-inf"),float("+inf"))
+#                 print node.print_board()
+#                 print value
+#         except:
+#             ct=1   
+#         finally:
+#            signal.alarm(0)
+#            return (node,value)
+#         return (node,value)    
+
                                   
     def minmax_decision(self):
-        start = time.time()
-        level = MyBoardClass.level
-        (node,value) = self.max_value(self,level)
-#         print node.bymove        
-        return (node,value)
+        ct =0
+        signal.signal(signal.SIGALRM, kmt81handler)
+        signal.alarm( 14 )    
+        node = [(0,0),(0,0),(0,0)]
+        value = 0    
+        try:    
+#             start = time.time()
+            level = kmt81MyBoardClass.level
+            
+            for i in range(level):
+                (node,value) = self.max_value(self,i+1)
+    #         print node.bymove        
+        except:
+            ct=1   
+        finally:
+           signal.alarm(0)
+           return (node,value)
+        return (node,value)    
+    
     
 def kmt81(board):    
-    myBoard = MyBoardClass(board)
-#     myBoard.print_board()        
+    myBoard = kmt81MyBoardClass(board)
+    #myBoard.print_board()        
     (node,value) = myBoard.minmax_decision()
     return node.bymove
     
 
 
 def kmt82(board):    
-    myBoard = MyBoardClass(board)
-#     myBoard.print_board()
+    myBoard = kmt81MyBoardClass(board)
+    #myBoard.print_board()
     (node,value) = myBoard.minmax_decision()
     return node.bymove
+
+def Random(board):    
+    myBoard = kmt81MyBoardClass(board)
+    #myBoard.print_board()
+    if(myBoard.isWhite == True):
+        symbol='Q'
+    else:
+        symbol='q'
+    node = myBoard.getRandomSuccessor(symbol)
+    if(node is not None ):
+        return node.bymove
+    return [(0,0),(0,0),(0,0)]
     
 #     if(myBoard.isWhite == True):
 #         symbol='Q'
@@ -871,7 +1082,7 @@ def main():
     if len(sys.argv) == 2:
         fname = sys.argv[1]
     else:
-        fname = "amazons1.config" #raw_input("setup file name?")        
+        fname = raw_input("setup file name?")        
     game = Amazons(fname)
     game.play()
     

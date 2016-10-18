@@ -1,0 +1,28 @@
+# Project Name
+
+Assignment 2 : Part 1 : Foundation of AI -Basic Minimax and alpha-beta pruning
+
+## Requirements
+
+Python 2.7
+
+## Usage / Running the program - minmax and minmax with alpha-beta pruning
+
+Main file is minimax_ab.py
+
+Command : Python minimax_ab.py
+
+Input:: the program will take the input for testcase file
+
+example:  
+
+```
+[khushboo@severus-temp aiss]$ python minimax_ab.py
+<span style="color:orange;">Please Enter the test case file name?</span>test_tree1
+
+```
+
+
+## Weblinks and Resources reffered
+Class Notes
+lecture Notes

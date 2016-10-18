@@ -1,0 +1,119 @@
+Script started on Mon 17 Oct 2016 07:03:18 PM EDT
+]0;khushboo@severus-temp:~/aiss[khushboo@severus-temp aiss]$ python minimax_ab.py 
+Please Enter the test case file name?test_tree1
+Minimax Output
+A
+B
+D
+E
+C
+F
+I
+K
+L
+J
+G
+M
+N
+H
+Utility value :4.0
+Minimax Output with Alpha-Beta Pruning
+A
+B
+D
+E
+C
+F
+I
+K
+J
+G
+M
+H
+Utility value :4.0
+]0;khushboo@severus-temp:~/aiss[khushboo@severus-temp aiss]$ python minimax_ab.py 
+Please Enter the test case file name?test_tree2
+Minimax Output
+A
+B
+D
+H
+I
+E
+J
+K
+C
+F
+L
+M
+G
+N
+O
+Utility value :6.0
+Minimax Output with Alpha-Beta Pruning
+A
+B
+D
+H
+I
+E
+J
+C
+F
+L
+M
+Utility value :6.0
+]0;khushboo@severus-temp:~/aiss[khushboo@severus-temp aiss]$ python minimax_ab.py 
+Please Enter the test case file name?test_tree3
+Minimax Output
+A
+B
+E
+L
+M
+F
+N
+O
+G
+P
+Q
+C
+H
+R
+S
+I
+T
+U
+D
+J
+V
+W
+K
+X
+Y
+Utility value :8.0
+Minimax Output with Alpha-Beta Pruning
+A
+B
+E
+L
+M
+F
+N
+G
+P
+C
+H
+R
+S
+D
+J
+V
+W
+K
+X
+Utility value :8.0
+]0;khushboo@severus-temp:~/aiss[khushboo@severus-temp aiss]$ exit
+exit
+
+Script done on Mon 17 Oct 2016 07:03:54 PM EDT
